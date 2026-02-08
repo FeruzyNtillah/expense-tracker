@@ -1,9 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path = require('path');
+const path = require('path'); // Necessary for resolving .env path
 const connectDB = require('./config/db');
 
+// Load environment variables from parent directory
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Connect to database
@@ -20,9 +21,9 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', require('./routes/expenseRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 
-// Test route
+// Health check route
 app.get('/', (req, res) => {
-    res.json({ message: 'API is running' });
+    res.json({ message: 'Expense Tracker API' });
 });
 
 const PORT = process.env.PORT || 5000;
