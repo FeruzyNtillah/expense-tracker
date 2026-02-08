@@ -4,8 +4,8 @@ const cors = require('cors');
 const path = require('path'); // Necessary for resolving .env path
 const connectDB = require('./config/db');
 
-// Load environment variables from parent directory
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+// Load environment variables from backend directory
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Connect to database
 connectDB();
