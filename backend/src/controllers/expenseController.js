@@ -6,7 +6,7 @@ const Expense = require('../models/Expense');
 const getExpenses = async (req, res) => {
     try {
         // CRITICAL: Only get expenses for logged-in user
-        const expenses = await Expense.find({ userId: req.user.id }).sort({
+        const expenses = await Expense.find({ userId: req.user._id }).sort({
             date: -1,
         });
 
@@ -28,7 +28,7 @@ const getExpenseById = async (req, res) => {
         }
 
         // Security check: Make sure user owns this expense
-        if (expense.userId.toString() !== req.user.id) {
+        if (expense.userId.toString() !== req.user._id.toString()) {
             return res.status(401).json({ message: 'Not authorized' });
         }
 
@@ -59,7 +59,7 @@ const createExpense = async (req, res) => {
         }
 
         const expense = await Expense.create({
-            userId: req.user.id, // CRITICAL: From JWT middleware, never from req.body
+            userId: req.user._id, // CRITICAL: From JWT middleware, never from req.body
             title,
             amount,
             category,
@@ -84,7 +84,7 @@ const updateExpense = async (req, res) => {
         }
 
         // Security check: Make sure user owns this expense
-        if (expense.userId.toString() !== req.user.id) {
+        if (expense.userId.toString() !== req.user._id.toString()) {
             return res.status(401).json({ message: 'Not authorized' });
         }
 
@@ -121,7 +121,7 @@ const deleteExpense = async (req, res) => {
         }
 
         // Security check: Make sure user owns this expense
-        if (expense.userId.toString() !== req.user.id) {
+        if (expense.userId.toString() !== req.user._id.toString()) {
             return res.status(401).json({ message: 'Not authorized' });
         }
 
@@ -165,7 +165,7 @@ const getMonthlyReport = async (req, res) => {
 
         // Get expenses for the user in this date range
         const expenses = await Expense.find({
-            userId: req.user.id,
+            userId: req.user._id,
             date: { $gte: startDate, $lte: endDate },
         });
 
@@ -211,7 +211,7 @@ const getMonthlyReport = async (req, res) => {
 // @access  Private
 const getCategorySummary = async (req, res) => {
     try {
-        const expenses = await Expense.find({ userId: req.user.id });
+        const expenses = await Expense.find({ userId: req.user._id });
 
         // Calculate total
         const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
@@ -274,7 +274,7 @@ const getExpensesByRange = async (req, res) => {
         }
 
         const expenses = await Expense.find({
-            userId: req.user.id,
+            userId: req.user._id,
             date: { $gte: start, $lte: end },
         }).sort({ date: -1 });
 
