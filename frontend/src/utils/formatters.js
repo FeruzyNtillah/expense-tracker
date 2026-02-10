@@ -1,8 +1,8 @@
 export const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-TZ', {
     style: 'currency',
-    currency: 'USD',
-  }).format(amount);
+    currency: 'TZS',
+  }).format(amount).replace('TZS', 'TZS/=');
 };
 
 export const formatDate = (date) => {

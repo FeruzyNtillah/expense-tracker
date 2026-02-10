@@ -80,7 +80,7 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
         </div>
 
         <div className="form-group">
-          <label>Amount ($)</label>
+          <label>Amount (TZS/=)</label>
           <input
             type="number"
             name="amount"
