@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { expenseService } from '../../services/expenseService';
 import { categoryService } from '../../services/categoryService';
 import { formatDateInput } from '../../utils/formatters';
-import './Expenses.css';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Select } from '../ui/select';
+import { Button } from '../ui/button';
+import { Loader2, AlertCircle, DollarSign, FileText, FolderOpen, Calendar } from 'lucide-react';
 
 const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -17,7 +22,7 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
 
   useEffect(() => {
     loadCategories();
-    
+
     if (expense) {
       setFormData({
         title: expense.title,
@@ -61,76 +66,114 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
   };
 
   return (
-    <div className="expense-form-container">
-      <h3>{expense ? 'Edit Expense' : 'Add New Expense'}</h3>
-      
-      {error && <div className="error-message">{error}</div>}
-      
-      <form onSubmit={handleSubmit} className="expense-form">
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="e.g., Grocery Shopping"
-            required
-          />
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>{expense ? 'Edit Expense' : 'Add New Expense'}</CardTitle>
+        <CardDescription>
+          {expense ? 'Update the details of your expense' : 'Fill in the details to track a new expense'}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {error && (
+          <div className="flex items-center gap-2 p-3 mb-4 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            <AlertCircle className="h-4 w-4" />
+            <span>{error}</span>
+          </div>
+        )}
 
-        <div className="form-group">
-          <label>Amount (TZS/=)</label>
-          <input
-            type="number"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            step="0.01"
-            min="0.01"
-            placeholder="0.00"
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <div className="relative">
+              <FileText className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="title"
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="e.g., Grocery Shopping"
+                className="pl-9"
+                required
+              />
+            </div>
+          </div>
 
-        <div className="form-group">
-          <label>Category</label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat.name}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="amount">Amount (TZS/=)</Label>
+            <div className="relative">
+              <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="amount"
+                type="number"
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                className="pl-9"
+                required
+              />
+            </div>
+          </div>
 
-        <div className="form-group">
-          <label>Date</label>
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <div className="relative">
+              <FolderOpen className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
+              <Select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="pl-9"
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          </div>
 
-        <div className="form-actions">
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? 'Saving...' : expense ? 'Update' : 'Add Expense'}
-          </button>
-          <button type="button" className="btn-secondary" onClick={onCancel}>
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="space-y-2">
+            <Label htmlFor="date">Date</Label>
+            <div className="relative">
+              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                id="date"
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="pl-9"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <Button type="submit" disabled={loading} className="flex-1">
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                expense ? 'Update Expense' : 'Add Expense'
+              )}
+            </Button>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

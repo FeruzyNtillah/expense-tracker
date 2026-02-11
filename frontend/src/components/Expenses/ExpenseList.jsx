@@ -3,7 +3,9 @@ import { expenseService } from '../../services/expenseService';
 import ExpenseItem from './ExpenseItem';
 import ExpenseForm from './ExpenseForm';
 import { formatCurrency } from '../../utils/formatters';
-import './Expenses.css';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Button } from '../ui/button';
+import { Plus, X, Loader2, Receipt, Wallet } from 'lucide-react';
 
 const ExpenseList = () => {
   const [expenses, setExpenses] = useState([]);
@@ -57,26 +59,49 @@ const ExpenseList = () => {
 
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
-  if (loading) return <div className="loading">Loading expenses...</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-sm text-muted-foreground">Loading expenses...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="expense-list-container">
-      <div className="expense-header">
+    <div className="container mx-auto px-4 py-8 space-y-6">
+      <div className="flex items-center justify-between">
         <div>
-          <h2>My Expenses</h2>
-          <p className="expense-total">
-            Total: {formatCurrency(totalExpenses)} ({expenses.length} expenses)
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">My Expenses</h1>
+          <div className="flex items-center gap-2 mt-2 text-muted-foreground">
+            <Wallet className="h-4 w-4" />
+            <p className="text-sm">
+              Total: <span className="font-semibold text-foreground">{formatCurrency(totalExpenses)}</span> ({expenses.length} {expenses.length === 1 ? 'expense' : 'expenses'})
+            </p>
+          </div>
         </div>
-        <button
-          className="btn-primary"
-          onClick={() => setShowForm(!showForm)}
-        >
-          {showForm ? '✖ Close' : '➕ Add Expense'}
-        </button>
+        <Button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2">
+          {showForm ? (
+            <>
+              <X className="h-4 w-4" />
+              Close
+            </>
+          ) : (
+            <>
+              <Plus className="h-4 w-4" />
+              Add Expense
+            </>
+          )}
+        </Button>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
+      {error && (
+        <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+          {error}
+        </div>
+      )}
 
       {showForm && (
         <ExpenseForm
@@ -86,11 +111,19 @@ const ExpenseList = () => {
         />
       )}
 
-      <div className="expense-list">
+      <div className="space-y-3">
         {expenses.length === 0 ? (
-          <div className="empty-state">
-            <p>No expenses yet. Add your first expense!</p>
-          </div>
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Receipt className="h-16 w-16 text-muted-foreground mb-4" />
+              <CardTitle className="mb-2">No expenses yet</CardTitle>
+              <CardDescription className="mb-4">Add your first expense to start tracking!</CardDescription>
+              <Button onClick={() => setShowForm(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Expense
+              </Button>
+            </CardContent>
+          </Card>
         ) : (
           expenses.map((expense) => (
             <ExpenseItem

@@ -8,7 +8,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ExpenseList from './components/Expenses/ExpenseList';
 import CategoryList from './components/Categories/CategoryList';
 import MonthlyReport from './components/Reports/MonthlyReport';
-import './App.css';
 
 function App() {
   return (
