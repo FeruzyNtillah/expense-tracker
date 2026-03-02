@@ -60,7 +60,8 @@ const MonthlyReport = () => {
           <p className="text-muted-foreground">Analyze your spending patterns</p>
         </div>
         <div className="flex items-center gap-2">
-          <Calendar className="h-4 w-4 text-muted-foreground" />
+          {/* make the icon more prominent in both light and dark mode */}
+          <Calendar className="h-4 w-4 text-primary" />
           <Input
             type="month"
             value={getCurrentMonthValue()}
