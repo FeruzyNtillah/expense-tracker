@@ -54,16 +54,16 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
           Dashboard
         </h1>
-        <p className="text-lg text-muted-foreground">Welcome back! Here's your expense overview.</p>
+        <p className="text-base sm:text-lg text-muted-foreground">Welcome back! Here's your expense overview.</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-3">
         <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-linear-to-br from-card to-card/50 shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Expenses</CardTitle>
@@ -72,8 +72,8 @@ const Dashboard = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-foreground">{formatCurrency(stats.total)}</div>
-            <p className="text-sm text-muted-foreground mt-1">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">{formatCurrency(stats.total)}</div>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
               {stats.count} {stats.count === 1 ? 'expense' : 'expenses'} recorded
             </p>
           </CardContent>
@@ -87,8 +87,8 @@ const Dashboard = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-foreground">{formatCurrency(stats.monthlyTotal)}</div>
-            <p className="text-sm text-muted-foreground mt-1">Current month spending</p>
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">{formatCurrency(stats.monthlyTotal)}</div>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">Current month spending</p>
           </CardContent>
         </Card>
 
@@ -100,31 +100,31 @@ const Dashboard = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-foreground">
+            <div className="text-2xl sm:text-3xl font-bold text-foreground">
               {formatCurrency(stats.count > 0 ? stats.total / stats.count : 0)}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">Per expense</p>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">Per expense</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Quick Actions */}
       <Card className="border-0 bg-linear-to-br from-card to-card/50 shadow-md">
-        <CardHeader>
-          <CardTitle className="text-xl">Quick Actions</CardTitle>
-          <CardDescription className="text-base">Common tasks to manage your expenses</CardDescription>
+        <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
+          <CardTitle className="text-lg sm:text-xl">Quick Actions</CardTitle>
+          <CardDescription className="text-sm sm:text-base">Common tasks to manage your expenses</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-4">
-            <Button onClick={() => navigate('/expenses')} className="flex items-center gap-2 shadow-lg hover:shadow-xl">
+        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <Button onClick={() => navigate('/expenses')} className="flex items-center justify-center gap-2 shadow-lg hover:shadow-xl h-11 sm:h-9 text-base sm:text-sm">
               <Plus className="h-4 w-4" />
               Add Expense
             </Button>
-            <Button variant="outline" onClick={() => navigate('/reports')} className="flex items-center gap-2 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-200">
+            <Button variant="outline" onClick={() => navigate('/reports')} className="flex items-center justify-center gap-2 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-200 h-11 sm:h-9 text-base sm:text-sm">
               <BarChart3 className="h-4 w-4" />
               View Reports
             </Button>
-            <Button variant="outline" onClick={() => navigate('/categories')} className="flex items-center gap-2 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-200">
+            <Button variant="outline" onClick={() => navigate('/categories')} className="flex items-center justify-center gap-2 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-200 h-11 sm:h-9 text-base sm:text-sm">
               <FolderOpen className="h-4 w-4" />
               Manage Categories
             </Button>
@@ -134,19 +134,19 @@ const Dashboard = () => {
 
       {/* Recent Expenses */}
       <Card className="border-0 bg-linear-to-br from-card to-card/50 shadow-md">
-        <CardHeader>
-          <CardTitle className="text-xl">Recent Expenses</CardTitle>
-          <CardDescription className="text-base">Your latest transactions</CardDescription>
+        <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
+          <CardTitle className="text-lg sm:text-xl">Recent Expenses</CardTitle>
+          <CardDescription className="text-sm sm:text-base">Your latest transactions</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
           {recentExpenses.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="p-4 rounded-full bg-muted/50 mb-4">
-                <Receipt className="h-12 w-12 text-muted-foreground" />
+            <div className="flex flex-col items-center justify-center py-8 sm:py-12 text-center">
+              <div className="p-3 sm:p-4 rounded-full bg-muted/50 mb-4">
+                <Receipt className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground" />
               </div>
-              <p className="text-muted-foreground text-lg mb-2">No expenses yet</p>
-              <p className="text-muted-foreground text-sm mb-6">Start tracking your expenses today!</p>
-              <Button onClick={() => navigate('/expenses')} className="shadow-lg hover:shadow-xl">
+              <p className="text-muted-foreground text-base sm:text-lg mb-2">No expenses yet</p>
+              <p className="text-muted-foreground text-sm mb-4 sm:mb-6 px-4">Start tracking your expenses today!</p>
+              <Button onClick={() => navigate('/expenses')} className="shadow-lg hover:shadow-xl h-11 sm:h-9 text-base sm:text-sm">
                 Add Your First Expense
               </Button>
             </div>
@@ -155,15 +155,15 @@ const Dashboard = () => {
               {recentExpenses.map((expense) => (
                 <div
                   key={expense._id}
-                  className="flex items-center justify-between p-4 rounded-xl border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer group"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-xl border bg-card/50 hover:bg-card hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer group"
                 >
-                  <div className="flex flex-col gap-2">
-                    <span className="font-semibold text-foreground group-hover:text-primary transition-colors">{expense.title}</span>
-                    <Badge variant="secondary" className="w-fit">
+                  <div className="flex flex-col gap-2 mb-2 sm:mb-0">
+                    <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm sm:text-base">{expense.title}</span>
+                    <Badge variant="secondary" className="w-fit text-xs">
                       {expense.category}
                     </Badge>
                   </div>
-                  <span className="text-xl font-bold text-foreground">
+                  <span className="text-lg sm:text-xl font-bold text-foreground">
                     {formatCurrency(expense.amount)}
                   </span>
                 </div>

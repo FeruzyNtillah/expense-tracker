@@ -17,7 +17,7 @@ function App() {
         <Router>
           <div className="App min-h-screen bg-linear-to-br from-background via-background to-muted/20">
             <Navbar />
-            <main className="container mx-auto px-4 py-6">
+            <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-7xl">
               <Routes>
                 {/* Public Routes */}
                 <Route path="/login" element={<Login />} />

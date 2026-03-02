@@ -66,26 +66,26 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{expense ? 'Edit Expense' : 'Add New Expense'}</CardTitle>
-        <CardDescription>
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
+        <CardTitle className="text-lg sm:text-xl">{expense ? 'Edit Expense' : 'Add New Expense'}</CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           {expense ? 'Update the details of your expense' : 'Fill in the details to track a new expense'}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
         {error && (
-          <div className="flex items-center gap-2 p-3 mb-4 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-            <AlertCircle className="h-4 w-4" />
-            <span>{error}</span>
+          <div className="flex items-start gap-2 p-3 mb-4 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+            <span className="wrap-break-word">{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title" className="text-sm font-medium">Title</Label>
             <div className="relative">
-              <FileText className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <FileText className="absolute left-3 top-3 sm:top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 id="title"
                 type="text"
@@ -93,16 +93,16 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g., Grocery Shopping"
-                className="pl-9"
+                className="pl-10 h-11 sm:h-9 text-base sm:text-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">Amount (TZS/=)</Label>
+            <Label htmlFor="amount" className="text-sm font-medium">Amount (TZS/=)</Label>
             <div className="relative">
-              <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <DollarSign className="absolute left-3 top-3 sm:top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 id="amount"
                 type="number"
@@ -112,22 +112,22 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
                 step="0.01"
                 min="0.01"
                 placeholder="0.00"
-                className="pl-9"
+                className="pl-10 h-11 sm:h-9 text-base sm:text-sm"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category" className="text-sm font-medium">Category</Label>
             <div className="relative">
-              <FolderOpen className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
+              <FolderOpen className="absolute left-3 top-3 sm:top-2.5 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
               <Select
                 id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="pl-9"
+                className="pl-10 h-11 sm:h-9 text-base sm:text-sm appearance-none"
                 required
               >
                 <option value="">Select Category</option>
@@ -141,23 +141,23 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="date">Date</Label>
+            <Label htmlFor="date" className="text-sm font-medium">Date</Label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Calendar className="absolute left-3 top-3 sm:top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 id="date"
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="pl-9"
+                className="pl-10 h-11 sm:h-9 text-base sm:text-sm"
                 required
               />
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
-            <Button type="submit" disabled={loading} className="flex-1">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-6">
+            <Button type="submit" disabled={loading} className="flex-1 h-11 sm:h-9 text-base sm:text-sm">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -167,7 +167,7 @@ const ExpenseForm = ({ expense, onSuccess, onCancel }) => {
                 expense ? 'Update Expense' : 'Add Expense'
               )}
             </Button>
-            <Button type="button" variant="outline" onClick={onCancel}>
+            <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto h-11 sm:h-9 text-base sm:text-sm">
               Cancel
             </Button>
           </div>
